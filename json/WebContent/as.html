@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/json/js/AjaxUtil.js"></script>
+</head>
+<body>
+<table border="1">
+	<thead>
+		<tr>
+			<th data-col="diname">부서이름</th>
+			<th data-col="dinum">부서번호</th>
+			<th data-col="didesc">부서설명</th>
+			<th data-col="dicode">부서코드</th>
+			<th data-col="ditest">부서테스트</th>
+		</tr>
+	</thead>
+	<tbody id="tbody">
+	
+	</tbody>
+</table>
+<script>
+	var au = new AjaxUtil({url:'/json/json/list',
+		cb:callback
+	});
+	au.send();
+	
+	function callback(res){
+		var thObjs = document.querySelectorAll('th[data-col]');
+		var list = JSON.parse(res);
+		var html = '';
+		for(var di of list){
+			html += '<tr>';
+			for(var thObj of thObjs){
+				html += '<td>' + di[thObj.getAttribute('data-col')] + '</td>'; 
+			}
+			html += '</tr>';
+		}
+		document.querySelector('#tbody').innerHTML=html;
+	}
+</script>
+</body>
+</html>

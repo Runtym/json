@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/json/js/AjaxUtil.js"></script>
+</head>
+<body>
+
+	<form method="post">
+		영화제목 : <input type="text" name="tmname"><br>
+		티켓가격 : <input type="number" name="tmprice"><br>
+		영화개봉일 : <input type="date" name="tmstartdat"><br>
+		상영종료일 : <input type="date" name="tmenddat"><br>
+		<button type='button' onclick="insertTicket()">영화등록</button>
+	</form>
+<script>
+String.prototype.replaceAll = function(str1,str2){
+	var re = new RegExp(str1,'gi');
+	return this.replace(re,str2);
+}
+
+function insertTicket(){
+	var form = document.querySelector('form');
+	var tmname = document.querySelector('input[name=tmname]').value;
+	var tmprice = document.querySelector('input[name=tmprice]').value;
+	var tmstartdat = document.querySelector('input[name=tmstartdat]').value;
+	var tmenddat = document.querySelector('input[name=tmenddat]').value;
+	var params = {tmname:tmname,
+			tmprice:tmprice,
+			tmstartdat:tmstartdat.replaceAll('-',''),
+			tmenddat:tmenddat.replaceAll('-','')
+			};
+	var conf = {url:'/json/api/ticket/insert',method:'POST',params:params};
+	var au = new AjaxUtil(conf);
+	au.send();
+}
+</script>
+</body>
+</html>
