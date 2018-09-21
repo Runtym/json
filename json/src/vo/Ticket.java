@@ -11,7 +11,19 @@ public class Ticket {
 	private String tmdesc;
 	private Integer tmcnt;
 	private String tmimg;
-	public Ticket() {}
+	private PageInfo pi;
+	
+	public PageInfo getPi() {
+		return pi;
+	}
+
+	public void setPi(PageInfo pi) {
+		this.pi = pi;
+	}
+
+	public Ticket() {
+		this.pi = new PageInfo();
+	}
 	
 	public Integer getTmnum() {
 		return tmnum;
@@ -67,12 +79,14 @@ public class Ticket {
 	public void setTmdesc(String tmdesc) {
 		this.tmdesc = tmdesc;
 	}
+	
 	@Override
 	public String toString() {
 		return "Ticket [tmnum=" + tmnum + ", tmname=" + tmname + ", tmprice=" + tmprice + ", tmstartdat=" + tmstartdat
 				+ ", tmenddat=" + tmenddat + ", tmcredat=" + tmcredat + ", tmdesc=" + tmdesc + ", tmcnt=" + tmcnt
-				+ ", tmimg=" + tmimg + "]";
+				+ ", tmimg=" + tmimg + ", pi=" + pi + "]";
 	}
+
 	public Ticket(Integer tmnum, String tmname, Integer tmprice, String tmstartdat, String tmenddat, String tmcredat,
 			String tmdesc, Integer tmcnt, String tmimg) {
 		super();

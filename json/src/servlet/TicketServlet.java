@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,7 @@ public class TicketServlet extends HttpServlet {
 		if(t!=null&&!t.equals("")) {
 			t = gson.fromJson(params, Ticket.class);
 		}
+		System.out.println(t);
 		String uri = request.getRequestURI();
 		String cmd = uri.substring(uri.lastIndexOf("/")+1);
 		if(cmd.equals("list")) {
@@ -69,7 +71,7 @@ public class TicketServlet extends HttpServlet {
 	}
 	
 	private void doWrite(HttpServletResponse res,Object obj) throws IOException {
-		res.setContentType("application/json;charset=utf-8");
+		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
 		pw.write(gson.toJson(obj));
 		pw.flush();

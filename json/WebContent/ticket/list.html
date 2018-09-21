@@ -21,14 +21,41 @@
 	<tbody id="tbody">
 	</tbody>
 </table>
+<div id="pagination"></div>
 <script>
 	var tbody = document.querySelector('#tbody');
+	var pagination = document.querySelector('#pagination');
+	var Request = function(){
+		var params = {};
+		var init = function(){
+			var url = unescape(location.href);
+			var paramList = url.substring(url.lastIndexOf('?')+1).split('&');
+			for(var param of paramList){
+				var kye = param.split('=')[0];
+				var value = param.split('=')[1];
+				params[kye] = value;
+			}
+		}
+		
+		this.getParameter = function(key){
+			return params[key];
+		}
+		init();
+	}
+	var req = new Request();
+	
 	window.onload = function(){
-		var au = new AjaxUtil({url:'/json/api/ticket/list',cb:callback});
+		var params = {};
+		var page = req.getParameter('page');
+		var pi = {page:page?page:1};
+		params = {pi:pi};
+		var au = new AjaxUtil({url:'/json/api/ticket/list',
+			cb:callback,
+			params:params
+			});
 		au.send();
 		function callback(res){
 			res = JSON.parse(res);
-			alert(`page : ${res.page}`);
 			var html = '';
 			if(res.list.length==0){
 				html += '<tr><td colspan="7">등록된 영화가 없습니다.</td></tr>';
@@ -45,6 +72,13 @@
 				html += '</tr>';
 			}
 			tbody.insertAdjacentHTML('afterbegin',html)
+			html = '';
+			for(var i=res.page.sBlock,max=res.page.lBlock;i<=max;i++){
+				html += '<a href="/json/ticket/list.html?page=' + i + '">';
+				html += '[ ' + i + ' ]';
+				html += '</a>';
+			}
+			pagination.insertAdjacentHTML('afterbegin',html)
 		}
 	}
 </script>

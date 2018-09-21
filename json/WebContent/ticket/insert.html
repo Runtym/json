@@ -31,9 +31,21 @@ function insertTicket(){
 			tmstartdat:tmstartdat.replaceAll('-',''),
 			tmenddat:tmenddat.replaceAll('-','')
 			};
-	var conf = {url:'/json/api/ticket/insert',method:'POST',params:params};
+	var conf = {url:'/json/api/ticket/insert',
+			method:'POST',
+			params:params,
+			cb:callback};
 	var au = new AjaxUtil(conf);
 	au.send();
+	function callback(res){
+		res = JSON.parse(res);
+		if(res.rCnt==1){
+			alert('등록 완료');
+			location.href='/json/ticket/list.html';
+			return;
+		}
+		alert('등록 실패, 뭐 잘못한거겠지..');
+	}
 }
 </script>
 </body>

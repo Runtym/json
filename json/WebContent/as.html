@@ -20,7 +20,15 @@
 	
 	</tbody>
 </table>
+<form>
+	<input type="text" name="test">
+	<button type="button" id="btn">테스트</button>
+</form>
 <script>
+	document.querySelector('#btn').onclick = function(){
+		var form = document.querySelector('form');
+		var fd = new FormData(form);
+	}
 	var au = new AjaxUtil({url:'/json/json/list',
 		cb:callback
 	});
