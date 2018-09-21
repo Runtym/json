@@ -27,10 +27,10 @@ public class TicketService {
 	}
 	
 	public int updateTicket(Ticket ticket) {
-		return 0;
+		return tdao.updateTicket(ticket);
 	}
 	
 	public int deleteTicket(Ticket ticket) {
-		return 0;
+		return tdao.deleteTicket(ticket);
 	}
 }

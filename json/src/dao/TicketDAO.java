@@ -83,7 +83,7 @@ public class TicketDAO {
 	public Ticket selectTicket(Ticket ticket) {
 		Connection con = DBCon.getCon();
 		try {
-			String sql = "select * from ticket_movie where tmnum=?";
+			String sql = "select * from ticket_movie tm where tmnum=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, ticket.getTmnum());
 			rs = ps.executeQuery();
@@ -130,10 +130,39 @@ public class TicketDAO {
 	}
 	
 	public int updateTicket(Ticket ticket) {
+		Connection con = DBCon.getCon();
+		try {
+			String sql = " update TICKET_MOVIe set tmname=?,\r\n" + 
+					"tmprice=?, tmstartdat=?,tmenddat=?\r\n" + 
+					"where tmnum=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1,ticket.getTmname());
+			ps.setInt(2,ticket.getTmprice());
+			ps.setString(3,ticket.getTmstartdat());
+			ps.setString(4,ticket.getTmenddat());
+			ps.setInt(5,ticket.getTmnum());
+			return ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
 		return 0;
 	}
 	
 	public int deleteTicket(Ticket ticket) {
+		Connection con = DBCon.getCon();
+		try {
+			String sql = "delete from ticket_movie " + 
+					" where tmnum=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,ticket.getTmnum());
+			return ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
 		return 0;
 	}
 }

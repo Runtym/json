@@ -4,46 +4,47 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="/json/js/AjaxUtil.js"></script>
+<script src="/json/js/Request.js"></script>
+<style>
+th, td{text-align:center;
+    border: 1px solid #444444;
+    padding:5px;
+}
+#pagination{text-align:center}
+.container {
+	text-align: center;
+	padding: 5px;
+}
+.container table {
+	border: 1px solid #ffcdef;
+	margin: 0 auto;
+    border-collapse: collapse;
+}
+</style>
 </head>
 <body>
-<table border="1">
-	<thead>
-		<tr>
-			<th>번호</th>
-			<th>영화</th>
-			<th>가격</th>
-			<th>개봉일</th>
-			<th>종료일</th>
-			<th>등록일</th>
-			<th>관객수</th>
-		</tr>
-	</thead>
-	<tbody id="tbody">
-	</tbody>
-</table>
+<div class="container">
+	<table>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>영화</th>
+				<th>가격</th>
+				<th>개봉일</th>
+				<th>종료일</th>
+				<th>등록일</th>
+				<th>관객수</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
+</div>
 <div id="pagination"></div>
-<script>
+<script> 
 	var tbody = document.querySelector('#tbody');
 	var pagination = document.querySelector('#pagination');
-	var Request = function(){
-		var params = {};
-		var init = function(){
-			var url = unescape(location.href);
-			var paramList = url.substring(url.lastIndexOf('?')+1).split('&');
-			for(var param of paramList){
-				var kye = param.split('=')[0];
-				var value = param.split('=')[1];
-				params[kye] = value;
-			}
-		}
-		
-		this.getParameter = function(key){
-			return params[key];
-		}
-		init();
-	}
 	var req = new Request();
-	
 	window.onload = function(){
 		var params = {};
 		var page = req.getParameter('page');
@@ -57,10 +58,12 @@
 		function callback(res){
 			res = JSON.parse(res);
 			var html = '';
-			alert(res.list.length);
 			if(res.list.length==0){
 				html += '<tr><td colspan="7">등록된 영화가 없습니다.</td></tr>';
 			}
+			/* res.list = res.list.filter(tm=>{
+				return tm.tmnum%1000==0;
+			}) */
 			for(var tm of res.list){
 				html += '<tr>';
 				html += '<td>' + tm.tmnum + '</td>';
