@@ -74,6 +74,6 @@ public class TicketServlet extends HttpServlet {
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = res.getWriter();
 		pw.write(gson.toJson(obj));
-		pw.flush();
+		//pw.flush();
 	}
 }
